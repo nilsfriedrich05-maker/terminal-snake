@@ -139,7 +139,13 @@ def game(stdscr):
             for idx, (sy, sx) in enumerate(snake):
                 if sy < h and sx < w:
                     color_idx = (idx // 3) % 4 + 1
-                    char = "█" if idx == 0 else "▓" if idx < 3 else "░"
+                    head_chars = {
+                        curses.KEY_RIGHT: "▶",
+                        curses.KEY_LEFT: "◀",
+                        curses.KEY_UP: "▲",
+                        curses.KEY_DOWN: "▼",
+                    }
+                    char = head_chars.get(direction, "▶") if idx == 0 else "▓" if idx < 3 else "░"
                     attr = curses.color_pair(color_idx)
                     if idx == 0:
                         attr |= curses.A_BOLD
