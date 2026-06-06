@@ -7,14 +7,6 @@ import time
 
 HIGHSCORE_FILE = os.path.join(os.path.dirname(__file__), ".highscore")
 
-SNAKE_COLORS = [
-    (curses.COLOR_GREEN, curses.COLOR_BLACK),
-    (curses.COLOR_CYAN, curses.COLOR_BLACK),
-    (curses.COLOR_YELLOW, curses.COLOR_BLACK),
-    (curses.COLOR_MAGENTA, curses.COLOR_BLACK),
-]
-
-
 def load_highscore():
     try:
         with open(HIGHSCORE_FILE) as f:
@@ -28,12 +20,6 @@ def save_highscore(score):
         json.dump({"score": score}, f)
 
 
-def draw_border(win, h, w):
-    win.attron(curses.color_pair(6))
-    win.border("│", "│", "─", "─", "╭", "╮", "╰", "╯")
-    win.attroff(curses.color_pair(6))
-
-
 def game(stdscr):
     curses.curs_set(0)
     curses.start_color()
@@ -45,7 +31,6 @@ def game(stdscr):
     curses.init_pair(4, curses.COLOR_MAGENTA, -1)
     curses.init_pair(5, curses.COLOR_RED, -1)
     curses.init_pair(6, curses.COLOR_WHITE, -1)
-    curses.init_pair(7, curses.COLOR_WHITE, -1)
 
     highscore = load_highscore()
 
@@ -253,11 +238,11 @@ def game(stdscr):
             elif i == 1:
                 stdscr.attron(curses.color_pair(5) | curses.A_BOLD)
             else:
-                stdscr.attron(curses.color_pair(7))
+                stdscr.attron(curses.color_pair(6))
             if 0 <= y < h and x >= 0:
                 stdscr.addstr(y, max(0, x), msg)
             stdscr.attroff(curses.color_pair(5) | curses.A_BOLD)
-            stdscr.attroff(curses.color_pair(7))
+            stdscr.attroff(curses.color_pair(6))
 
         stdscr.refresh()
 
